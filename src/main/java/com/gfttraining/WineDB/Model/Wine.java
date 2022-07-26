@@ -1,8 +1,10 @@
 package com.gfttraining.WineDB.Model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -21,14 +23,17 @@ public class Wine {
     int body;
     int acidity;
 
-    @ManyToOne
-    int winery_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "winery_id", referencedColumnName = "id")
+    private Winery winery;
 
-    @ManyToOne
-    int type_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_id")
+    private Type type;
     
-    @ManyToOne
-    int region_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id")
+    private Region region;
 
     public Wine(){
 
@@ -43,9 +48,6 @@ public class Wine {
         this.price = price;
         this.body = body;
         this.acidity = acidity;
-        this.winery_id = winery_id;
-        this.type_id = type_id;
-        this.region_id = region_id;
     }
 
     public int getId() {
@@ -80,18 +82,6 @@ public class Wine {
         this.acidity = acidity;
     }
 
-    public void setWinery_id(int winery_id) {
-        this.winery_id = winery_id;
-    }
-
-    public void setType_id(int type_id) {
-        this.type_id = type_id;
-    }
-
-    public void setRegion_id(int region_id) {
-        this.region_id = region_id;
-    }
-
     public String getName() {
         return name;
     }
@@ -120,17 +110,6 @@ public class Wine {
         return acidity;
     }
 
-    public int getWinery_id() {
-        return winery_id;
-    }
-
-    public int getType_id() {
-        return type_id;
-    }
-
-    public int getRegion_id() {
-        return region_id;
-    }
 
   
 
