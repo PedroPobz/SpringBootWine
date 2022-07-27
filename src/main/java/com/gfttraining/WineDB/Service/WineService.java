@@ -1,6 +1,10 @@
 package com.gfttraining.WineDB.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.gfttraining.WineDB.Model.Wine;
@@ -21,6 +25,12 @@ public class WineService {
 
     public void deleteWine(int id){
         wineRepository.deleteById(id);
+    }
+    
+    public List<Wine> bestRating(Pageable limit){
+    	
+    	return wineRepository.findAllOrderByRatingDesc(limit);
+    
     }
 
 }
