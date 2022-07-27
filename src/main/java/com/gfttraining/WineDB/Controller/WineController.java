@@ -2,6 +2,10 @@ package com.gfttraining.WineDB.Controller;
 
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +24,12 @@ import com.gfttraining.WineDB.Service.WineService;
 @RestController
 @RequestMapping("/api/wine")
 public class WineController {
+
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
+    Date date = new Date ();
+    int thisYear = Integer.parseInt(formatter.format(date));
     
+    @Autowired
     WineService wineService;
 
     WineController(WineService wineService) {
@@ -35,7 +44,28 @@ public class WineController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Wine createWine(@RequestBody Wine wine){
+    public Wine createWine(@RequestBody Wine wine) throws Exception{
+        if(wine.getName() == null || wine.getName().isEmpty()){
+            throw new Exception("No name of wine");
+        }
+        if(wine.getYear() < 1900 || wine.getYear() > thisYear){
+            throw new Exception("Bad year");
+        }
+        if(wine.getRating() < 0 || wine.getRating() > 5){
+            throw new Exception("Bad rating");
+        }
+        if(wine.getBody() < 1 || wine.getBody() > 5){
+            throw new Exception("Bad body");
+        }
+        if(wine.getAcidity() < 1 || wine.getAcidity() > 5){
+            throw new Exception("Bad acidity");
+        }
+        if(wine.getNum_reviews() < 0){
+            throw new Exception("Bad number of reviews");
+        }
+        if(wine.getPrice() < 0){
+            throw new Exception("Bad price");
+        }
       return  wineService.createWine(wine);
     }
 

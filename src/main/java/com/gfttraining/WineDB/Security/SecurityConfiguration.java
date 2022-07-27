@@ -32,10 +32,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
        	//   .and()
        	//   .httpBasic();
 		http.authorizeHttpRequests()
-			.antMatchers(HttpMethod.POST,"/api*").hasAnyRole("ADMIN","USER")
-			.antMatchers(HttpMethod.DELETE,"/api*").hasRole("ADMIN")
-			.antMatchers(HttpMethod.PUT,"/api*").hasRole("ADMIN")
+			.antMatchers(HttpMethod.POST,"/api/**").hasAnyRole("ADMIN","USER")
+			.antMatchers(HttpMethod.DELETE,"/api/**").hasRole("ADMIN")
+			.antMatchers(HttpMethod.PUT,"/api/**").hasRole("ADMIN")
 			.and()
+			.csrf()
+			.disable()
 			.httpBasic();
     }
 	
