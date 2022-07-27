@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="Wine")
 public class Wine {
@@ -26,14 +28,17 @@ public class Wine {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "winery_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Winery winery;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Type type;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Region region;
 
     public Wine(){
