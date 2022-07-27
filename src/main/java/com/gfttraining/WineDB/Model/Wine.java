@@ -34,8 +34,7 @@ public class Wine {
 
     }
 
-    public Wine(String name, int year, float rating, int num_reviews, float price, int body, int acidity, int winery_id,
-            int type_id, int region_id) {
+    public Wine(String name, int year) {
         this.name = name;
         this.year = year;
     }

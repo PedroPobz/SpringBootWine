@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gfttraining.WineDB.Model.Wine;
-import com.gfttraining.WineDB.Model.Winery;
 import com.gfttraining.WineDB.Repository.*;
+import com.gfttraining.WineDB.Service.WineService;
 
 
 @RestController
@@ -26,43 +26,38 @@ import com.gfttraining.WineDB.Repository.*;
 public class WineController {
     
     @Autowired
-    WineRepository wineRepository;
-
-    @GetMapping("findAll")
-    public List<Wine> findAll(){
-        return wineRepository.findAll();
-    }
+    WineService wineService;
 
     @GetMapping("/{id}")
     public Wine findById(@PathVariable int id){
-        return wineRepository.findById(id).get();
+        return wineService.findById(id);
     }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public void createWine(@RequestBody Wine wine){
-        wineRepository.save(wine);
+        wineService.createWine(wine);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteWine(@PathVariable int id){
-        wineRepository.deleteById(id);
+        wineService.deleteWine(id);
     }
 
     @PutMapping("{id}")
     public void updateWwine(@PathVariable int id, @RequestBody Wine wine){
-        Optional<Wine> win = wineRepository.findById(id);
+        Wine win = wineService.findById(id);
         if(wine.getName() == null || wine.getName().isEmpty()){
-            wine.setName(win.get().getName());
+            wine.setName(win.getName());
         }
         if(wine.getYear() == 0){
-            wine.setYear(win.get().getYear());
+            wine.setYear(win.getYear());
         }
    
 
         wine.setId(id);
-        wineRepository.save(wine);
+        wineService.createWine(wine);
     }
     
 }
