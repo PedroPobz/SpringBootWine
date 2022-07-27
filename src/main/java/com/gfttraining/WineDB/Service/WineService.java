@@ -15,8 +15,8 @@ public class WineService {
         return wineRepository.findById(id).get();
     }
 
-    public void createWine(Wine wine){
-        wineRepository.save(wine);
+    public Wine createWine(Wine wine){
+       return wineRepository.save(wine);
     }
 
     public void deleteWine(int id){

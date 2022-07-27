@@ -1,10 +1,7 @@
 package com.gfttraining.WineDB.Controller;
 
 
-import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gfttraining.WineDB.Model.Wine;
-import com.gfttraining.WineDB.Repository.*;
 import com.gfttraining.WineDB.Service.WineService;
 
 
@@ -25,8 +21,12 @@ import com.gfttraining.WineDB.Service.WineService;
 @RequestMapping("/api/wine")
 public class WineController {
     
-    @Autowired
     WineService wineService;
+
+    WineController(WineService wineService) {
+        this.wineService = wineService;
+    }
+
 
     @GetMapping("/{id}")
     public Wine findById(@PathVariable int id){
@@ -35,8 +35,8 @@ public class WineController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void createWine(@RequestBody Wine wine){
-        wineService.createWine(wine);
+    public Wine createWine(@RequestBody Wine wine){
+      return  wineService.createWine(wine);
     }
 
     @DeleteMapping("{id}")
