@@ -41,5 +41,5 @@ public class RecommendController {
         		? ResponseEntity.noContent().build()
         		: ResponseEntity.ok().body(list);
     }
-
+	
 }
