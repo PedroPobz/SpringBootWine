@@ -15,8 +15,16 @@ public interface WineRepository extends JpaRepository<Wine, Integer>{
 	@Query("select w from Wine w order by rating desc")
 	public List<Wine> findAllOrderByRatingDesc(Pageable p);
 	
-	@Query("select w from Wine w order by price desc")
+	@Query("select w from Wine w order by w.price desc")
 	public List<Wine> findAllOrderByPriceDesc(Pageable p);
+	
+	@Query("select w from Wine w order by w.rating/w.price desc")
+	public List<Wine> findBestBanForTheBuck(Pageable p);
+	
+	@Query("Select distinct w.year from Wine w order by w.rating desc")
+	List<String> findYearsWithBestRatedWine(Pageable p);
+	
+	List<Wine> findByYear(String year);
 	
 
 		

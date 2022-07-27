@@ -27,9 +27,18 @@ public class WineService {
     }
     
     public List<Wine> bestRating(Pageable limit){
-    	
     	return wineRepository.findAllOrderByRatingDesc(limit);
-    
     }
-
+    
+    public List<Wine> mostExpensiveWines(Pageable limit){
+    	return wineRepository.findAllOrderByPriceDesc(limit);
+    }
+    
+    public List<Wine> bestBangBuckWines(Pageable limit){
+    	return wineRepository.findBestBanForTheBuck(limit);
+    }
+    
+    public List<String> bestYearsOfWine(Pageable limit){ 
+    	return wineRepository.findYearsWithBestRatedWine(limit);
+    	}
 }

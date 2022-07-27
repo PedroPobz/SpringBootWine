@@ -37,4 +37,26 @@ public class RecommendController {
         		: ResponseEntity.ok().body(list);
     }
 	
+	@GetMapping("/expensive")
+	public ResponseEntity<List<Wine>> findMostExpensive(@RequestParam("top")int top){
+		
+		Pageable limit = PageRequest.of(0, top);
+		List<Wine> list = wineService.mostExpensiveWines(limit);
+		return list.size() == 0
+				? ResponseEntity.noContent().build()
+				: ResponseEntity.ok().body(list);
+		}
+	
+	@GetMapping("/vintage")
+	public ResponseEntity<List<Wine>> findMostVintage(@RequestParam("top")int top){
+		
+		Pageable limit = PageRequest.of(0, top);
+		List<Wine> list = wineService.bestBangBuckWines(limit);
+		return list.size() == 0
+				? ResponseEntity.noContent().build()
+				: ResponseEntity.ok().body(list);
+		}
+	
+	
+	
 }
