@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gfttraining.WineDB.Model.Wine;
+import com.gfttraining.WineDB.Repository.RegionRepository;
+import com.gfttraining.WineDB.Repository.TypeRepository;
+import com.gfttraining.WineDB.Repository.WineryRepository;
 import com.gfttraining.WineDB.Service.WineService;
 
 
@@ -31,6 +34,15 @@ public class WineController {
     
     @Autowired
     WineService wineService;
+
+    @Autowired
+    TypeRepository typeRepository;
+
+    @Autowired
+    WineryRepository wineryRepository;
+
+    @Autowired
+    RegionRepository regionRepository;
 
     WineController(WineService wineService) {
         this.wineService = wineService;
@@ -56,7 +68,7 @@ public class WineController {
     }
 
     @PutMapping("{id}")
-    public void updateWwine(@PathVariable int id, @RequestBody Wine wine){
+    public void updateWwine(@PathVariable int id, @RequestBody Wine wine) throws Exception{
         Wine win = wineService.findById(id);
         if(wine.getName() == null || wine.getName().isEmpty()){
             wine.setName(win.getName());
@@ -64,6 +76,8 @@ public class WineController {
         if(wine.getYear() == 0){
             wine.setYear(win.getYear());
         }
+
+        wineValidation(wine);
 
         wine.setId(id);
         wineService.createWine(wine);
@@ -90,6 +104,15 @@ public class WineController {
         }
         if(wine.getPrice() < 0){
             throw new Exception("Bad price");
+        }
+        if(! typeRepository.existsById(wine.getType().getId())){
+            throw new Exception("Bad type");
+        }
+        if(! wineryRepository.existsById(wine.getWinery().getId())){
+            throw new Exception("Bad winery");
+        }
+        if(! regionRepository.existsById(wine.getRegion().getId())){
+            throw new Exception("Bad region");
         }
     }
     
