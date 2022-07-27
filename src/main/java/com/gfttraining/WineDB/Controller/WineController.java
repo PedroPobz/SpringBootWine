@@ -45,7 +45,32 @@ public class WineController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Wine createWine(@RequestBody Wine wine) throws Exception{
+        wineValidation(wine);
+      return  wineService.createWine(wine);
+    }
+
+    @DeleteMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteWine(@PathVariable int id){
+        wineService.deleteWine(id);
+    }
+
+    @PutMapping("{id}")
+    public void updateWwine(@PathVariable int id, @RequestBody Wine wine){
+        Wine win = wineService.findById(id);
         if(wine.getName() == null || wine.getName().isEmpty()){
+            wine.setName(win.getName());
+        }
+        if(wine.getYear() == 0){
+            wine.setYear(win.getYear());
+        }
+
+        wine.setId(id);
+        wineService.createWine(wine);
+    }
+
+    private void wineValidation(Wine wine) throws Exception{
+        if(wine.getName() == null || wine.getName().trim().isEmpty()){
             throw new Exception("No name of wine");
         }
         if(wine.getYear() < 1900 || wine.getYear() > thisYear){
@@ -66,28 +91,6 @@ public class WineController {
         if(wine.getPrice() < 0){
             throw new Exception("Bad price");
         }
-      return  wineService.createWine(wine);
-    }
-
-    @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteWine(@PathVariable int id){
-        wineService.deleteWine(id);
-    }
-
-    @PutMapping("{id}")
-    public void updateWwine(@PathVariable int id, @RequestBody Wine wine){
-        Wine win = wineService.findById(id);
-        if(wine.getName() == null || wine.getName().isEmpty()){
-            wine.setName(win.getName());
-        }
-        if(wine.getYear() == 0){
-            wine.setYear(win.getYear());
-        }
-   
-
-        wine.setId(id);
-        wineService.createWine(wine);
     }
     
 }
