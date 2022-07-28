@@ -1,8 +1,5 @@
 package com.gfttraining.WineDB.Controller;
 
-
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,8 +30,8 @@ public class WineryController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void createWinery(@RequestBody Winery winery){
-        wineryService.createWinery(winery);
+    public Winery createWinery(@RequestBody Winery winery){
+       return wineryService.createWinery(winery);
     }
 
     @DeleteMapping("{id}")
@@ -44,14 +41,14 @@ public class WineryController {
     }
 
     @PutMapping("{id}")
-    public void updateWwinery(@PathVariable int id, @RequestBody Winery winery){
+    public Winery updateWwinery(@PathVariable int id, @RequestBody Winery winery){
         Winery win = wineryService.findById(id);
         if(winery.getName() == null || winery.getName().isEmpty()){
             winery.setName(win.getName());
         }
 
         winery.setId(id);
-        wineryService.createWinery(winery);
+        return wineryService.createWinery(winery);
     }
     
 }

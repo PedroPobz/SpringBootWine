@@ -1,10 +1,12 @@
 package com.gfttraining.WineDB.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.gfttraining.WineDB.Model.Winery;
 import com.gfttraining.WineDB.Repository.WineryRepository;
 
+@Service
 public class WineryService {
     
     @Autowired 
