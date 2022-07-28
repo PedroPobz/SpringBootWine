@@ -87,16 +87,16 @@ public class WineController {
         if(wine.getName() == null || wine.getName().trim().isEmpty()){
             throw new Exception("No name of wine");
         }
-        if(wine.getYear() < 1900 || wine.getYear() > thisYear){
+        if(Integer.parseInt(wine.getYear()) < 1900 || Integer.parseInt(wine.getYear()) > thisYear){
             throw new Exception("Bad year");
         }
         if(wine.getRating() < 0 || wine.getRating() > 5){
             throw new Exception("Bad rating");
         }
-        if(wine.getBody() < 1 || wine.getBody() > 5){
+        if(Integer.parseInt(wine.getBody()) < 1 || Integer.parseInt(wine.getBody()) > 5){
             throw new Exception("Bad body");
         }
-        if(wine.getAcidity() < 1 || wine.getAcidity() > 5){
+        if(Integer.parseInt(wine.getAcidity()) < 1 || Integer.parseInt(wine.getAcidity()) > 5){
             throw new Exception("Bad acidity");
         }
         if(wine.getNum_reviews() < 0){
