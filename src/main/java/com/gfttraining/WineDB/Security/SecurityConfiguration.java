@@ -27,17 +27,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
     protected void configure(HttpSecurity http) throws Exception
     {
-<<<<<<< HEAD:src/main/java/com/gfttraining/WineDB/SecurityConfiguration.java
-       // http.authorizeRequests()
-       	//   .anyRequest().authenticated()
-       	//   .and()
-       	//   .httpBasic();
-		http.authorizeHttpRequests()
-			.antMatchers(HttpMethod.POST,"/api*").hasAnyRole("ADMIN","USER")
-			.antMatchers(HttpMethod.DELETE,"/api*").hasRole("ADMIN")
-			.antMatchers(HttpMethod.PUT,"/api*").hasRole("ADMIN")
-			.and()
-=======
    
 		http.authorizeHttpRequests()
 			.antMatchers(HttpMethod.POST,"/api/**").hasAnyRole("ADMIN","USER")
@@ -46,7 +35,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 			.and()
 			.csrf()
 			.disable()
->>>>>>> master:src/main/java/com/gfttraining/WineDB/Security/SecurityConfiguration.java
 			.httpBasic();
     }
 	
