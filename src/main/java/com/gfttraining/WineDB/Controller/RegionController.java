@@ -39,18 +39,21 @@ public class RegionController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void createRegion(@RequestBody Region region){
+    public Region createRegion(@RequestBody Region region){
         regionRepository.save(region);
+        return region;
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteRegion(@PathVariable int id){
+    public String deleteRegion(@PathVariable int id){
+    	String reg = regionRepository.findById(id).get().getName();
         regionRepository.deleteById(id);
+        return "Región " + reg + "ha sido eliminada";
     }
 
     @PutMapping("{id}")
-    public void updateRegion(@PathVariable int id, @RequestBody Region region){
+    public Region updateRegion(@PathVariable int id, @RequestBody Region region){
         Optional<Region> reg = regionRepository.findById(id);
         if(region.getName() == null || region.getName().isEmpty()){
             region.setName(reg.get().getName());
@@ -63,6 +66,8 @@ public class RegionController {
 
         region.setId(id);
         regionRepository.save(region);
+        
+        return region;
     }
     
 }
