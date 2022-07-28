@@ -17,10 +17,10 @@ public class Wine {
     int id;
 
     String name;
-    int year;
+    String year;
     double rating;
-    int body;
-    int acidity;
+    String body;
+    String acidity;
     int num_reviews;
     double price;
 
@@ -72,19 +72,19 @@ public class Wine {
         this.price = price;
     }
 
-    public int getBody() {
+    public String getBody() {
         return body;
     }
 
-    public void setBody(int body) {
+    public void setBody(String body) {
         this.body = body;
     }
 
-    public int getAcidity() {
+    public String getAcidity() {
         return acidity;
     }
 
-    public void setAcidity(int acidity) {
+    public void setAcidity(String acidity) {
         this.acidity = acidity;
     }
 
@@ -121,7 +121,7 @@ public class Wine {
         this.name = name;
     }
 
-    public void setYear(int year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
@@ -129,7 +129,7 @@ public class Wine {
         return name;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 

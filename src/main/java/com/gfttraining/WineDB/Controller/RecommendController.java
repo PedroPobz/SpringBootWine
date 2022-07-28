@@ -1,5 +1,8 @@
 package com.gfttraining.WineDB.Controller;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,15 +51,14 @@ public class RecommendController {
 		}
 	
 	@GetMapping("/vintage")
-	public ResponseEntity<List<Wine>> findMostVintage(@RequestParam("top")int top){
-		
+	public ResponseEntity<HashMap<String, List<Wine>>> findMostVintage(@RequestParam("top")int top){
+				
 		Pageable limit = PageRequest.of(0, top);
-		List<Wine> list = wineService.bestBangBuckWines(limit);
-		return list.size() == 0
+		HashMap<String,List<Wine>> end = wineService.getVintageList(limit);
+		return end.size() == 0
 				? ResponseEntity.noContent().build()
-				: ResponseEntity.ok().body(list);
-		}
-	
+				: ResponseEntity.ok().body(end);
+	}
 	
 	
 }

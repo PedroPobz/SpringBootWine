@@ -73,7 +73,7 @@ public class WineController {
         if(wine.getName() == null || wine.getName().isEmpty()){
             wine.setName(win.getName());
         }
-        if(wine.getYear() == 0){
+        if(wine.getYear() == "0"){
             wine.setYear(win.getYear());
         }
 

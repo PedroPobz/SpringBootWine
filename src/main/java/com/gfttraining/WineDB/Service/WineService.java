@@ -1,5 +1,6 @@
 package com.gfttraining.WineDB.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,14 @@ public class WineService {
     	return wineRepository.findBestBanForTheBuck(limit);
     }
     
-    public List<String> bestYearsOfWine(Pageable limit){ 
-    	return wineRepository.findYearsWithBestRatedWine(limit);
+    public HashMap<String,List<Wine>> getVintageList(Pageable pageable){
+    	List<String> years = wineRepository.findYearsWithBestRatedWines(pageable);
+    	HashMap<String,List<Wine>> winesAll = new HashMap<>();
+    	
+    	for(String year:years) {
+    		List<Wine> wines = wineRepository.findByYear(year);
+    		winesAll.put(year, wines);
     	}
+    	return winesAll;
+    }
 }
