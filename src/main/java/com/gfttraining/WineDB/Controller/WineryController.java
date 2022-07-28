@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gfttraining.WineDB.Model.Winery;
-import com.gfttraining.WineDB.Repository.*;
+import com.gfttraining.WineDB.Service.WineryService;
 
 
 @RestController
@@ -24,34 +24,34 @@ import com.gfttraining.WineDB.Repository.*;
 public class WineryController {
     
     @Autowired
-    WineryRepository wineryRepository;
+    WineryService wineryService;
 
     @GetMapping("/{id}")
     public Winery findById(@PathVariable int id){
-        return wineryRepository.findById(id).get();
+        return wineryService.findById(id);
     }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public void createWinery(@RequestBody Winery winery){
-        wineryRepository.save(winery);
+        wineryService.createWinery(winery);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteWinery(@PathVariable int id){
-        wineryRepository.deleteById(id);
+        wineryService.deleteWinery(id);
     }
 
     @PutMapping("{id}")
     public void updateWwinery(@PathVariable int id, @RequestBody Winery winery){
-        Optional<Winery> win = wineryRepository.findById(id);
+        Winery win = wineryService.findById(id);
         if(winery.getName() == null || winery.getName().isEmpty()){
-            winery.setName(win.get().getName());
+            winery.setName(win.getName());
         }
 
         winery.setId(id);
-        wineryRepository.save(winery);
+        wineryService.createWinery(winery);
     }
     
 }
