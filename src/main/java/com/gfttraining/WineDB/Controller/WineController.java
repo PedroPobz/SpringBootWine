@@ -76,5 +76,10 @@ public class WineController {
         if(wine.getYear() == "0"){
             wine.setYear(win.getYear());
         }
+
+        wine.setId(id);
+        wineService.createWine(wine);
+    }
+
     
 }
