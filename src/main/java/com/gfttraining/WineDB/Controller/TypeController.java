@@ -37,8 +37,8 @@ public class TypeController {
 
 	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
-	public void createType(@RequestBody Type wine) {
-		typeRepository.save(wine);
+	public Type createType(@RequestBody Type wine) {
+		return typeRepository.save(wine);
 	}
 
 	@DeleteMapping("{id}")
@@ -48,13 +48,13 @@ public class TypeController {
 	}
 
 	@PutMapping("{id}")
-	public void updateType(@PathVariable int id, @RequestBody Type type) {
+	public Type updateType(@PathVariable int id, @RequestBody Type type) {
 		Optional<Type> typ = typeRepository.findById(id);
 		if (type.getName() == null || type.getName().isEmpty()) {
 			type.setName(typ.get().getName());
 		}
 
 		type.setId(id);
-		typeRepository.save(type);
+		return typeRepository.save(type);
 	}
 }
