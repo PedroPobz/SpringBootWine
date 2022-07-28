@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gfttraining.WineDB.Model.Region;
-import com.gfttraining.WineDB.Model.Wine;
-import com.gfttraining.WineDB.Model.Winery;
 import com.gfttraining.WineDB.Repository.*;
 
 

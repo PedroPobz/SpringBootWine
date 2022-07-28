@@ -1,8 +1,9 @@
 package com.gfttraining.WineDB.Controller;
 
 
-import java.util.List;
-import java.util.Optional;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,52 +18,68 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gfttraining.WineDB.Model.Wine;
-import com.gfttraining.WineDB.Model.Winery;
-import com.gfttraining.WineDB.Repository.*;
+import com.gfttraining.WineDB.Repository.RegionRepository;
+import com.gfttraining.WineDB.Repository.TypeRepository;
+import com.gfttraining.WineDB.Repository.WineryRepository;
+import com.gfttraining.WineDB.Service.WineService;
 
 
 @RestController
 @RequestMapping("/api/wine")
 public class WineController {
+
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
+    Date date = new Date ();
+    int thisYear = Integer.parseInt(formatter.format(date));
     
     @Autowired
-    WineRepository wineRepository;
+    WineService wineService;
 
-    @GetMapping("findAll")
-    public List<Wine> findAll(){
-        return wineRepository.findAll();
+    @Autowired
+    TypeRepository typeRepository;
+
+    @Autowired
+    WineryRepository wineryRepository;
+
+    @Autowired
+    RegionRepository regionRepository;
+
+    WineController(WineService wineService) {
+        this.wineService = wineService;
     }
+
 
     @GetMapping("/{id}")
     public Wine findById(@PathVariable int id){
-        return wineRepository.findById(id).get();
+        return wineService.findById(id);
     }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void createWine(@RequestBody Wine wine){
-        wineRepository.save(wine);
+    public Wine createWine(@RequestBody Wine wine) throws Exception{
+        /* wineValidation(wine); */
+      return  wineService.createWine(wine);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteWine(@PathVariable int id){
-        wineRepository.deleteById(id);
+        wineService.deleteWine(id);
     }
 
     @PutMapping("{id}")
-    public void updateWwine(@PathVariable int id, @RequestBody Wine wine){
-        Optional<Wine> win = wineRepository.findById(id);
+    public void updateWwine(@PathVariable int id, @RequestBody Wine wine) throws Exception{
+        Wine win = wineService.findById(id);
         if(wine.getName() == null || wine.getName().isEmpty()){
-            wine.setName(win.get().getName());
+            wine.setName(win.getName());
         }
-        if(wine.getYear() == 0){
-            wine.setYear(win.get().getYear());
+        if(wine.getYear() == "0"){
+            wine.setYear(win.getYear());
         }
-   
 
         wine.setId(id);
-        wineRepository.save(wine);
+        wineService.createWine(wine);
     }
+
     
 }

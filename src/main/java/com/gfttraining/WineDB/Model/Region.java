@@ -54,6 +54,9 @@ public class Region {
 	public void setCountry(String country) {
 		this.country = country;
 	}
+<<<<<<< HEAD
     
+=======
+>>>>>>> master
     
 }

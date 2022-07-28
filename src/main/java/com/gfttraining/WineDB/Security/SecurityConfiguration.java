@@ -1,4 +1,4 @@
-package com.gfttraining.WineDB;
+package com.gfttraining.WineDB.Security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
     protected void configure(HttpSecurity http) throws Exception
     {
+<<<<<<< HEAD:src/main/java/com/gfttraining/WineDB/SecurityConfiguration.java
        // http.authorizeRequests()
        	//   .anyRequest().authenticated()
        	//   .and()
@@ -36,6 +37,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 			.antMatchers(HttpMethod.DELETE,"/api*").hasRole("ADMIN")
 			.antMatchers(HttpMethod.PUT,"/api*").hasRole("ADMIN")
 			.and()
+=======
+   
+		http.authorizeHttpRequests()
+			.antMatchers(HttpMethod.POST,"/api/**").hasAnyRole("ADMIN","USER")
+			.antMatchers(HttpMethod.DELETE,"/api/**").hasRole("ADMIN")
+			.antMatchers(HttpMethod.PUT,"/api/**").hasRole("ADMIN")
+			.and()
+			.csrf()
+			.disable()
+>>>>>>> master:src/main/java/com/gfttraining/WineDB/Security/SecurityConfiguration.java
 			.httpBasic();
     }
 	
