@@ -7,7 +7,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+
+import org.hibernate.validator.constraints.Range;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.gfttraining.WineDB.Validation.MaxCurrentYear;
 
 @Entity
 @Table(name="Wine")
@@ -16,12 +23,25 @@ public class Wine {
     @GeneratedValue
     int id;
 
+    @NotBlank(message= "Wrong name")
     String name;
+
+    @Min(value= 1900, message= "Wrong year") @MaxCurrentYear
     String year;
+
+    @Range(min = 0, max = 5, message = "Wrong rating")
     double rating;
+
+    @Range(min = 1, max = 5, message = "Wrong body")
     String body;
+
+    @Range(min = 1, max = 5, message = "Wrong acidity")
     String acidity;
+
+    @Min(value = 0, message = "Wrong number of reviews")
     int num_reviews;
+
+    @Positive(message = "Wrong price")
     double price;
 
 

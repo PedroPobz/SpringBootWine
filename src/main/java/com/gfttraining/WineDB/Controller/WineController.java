@@ -57,7 +57,7 @@ public class WineController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Wine createWine(@RequestBody Wine wine) throws Exception{
-        wineValidation(wine);
+        /* wineValidation(wine); */
       return  wineService.createWine(wine);
     }
 
@@ -76,44 +76,5 @@ public class WineController {
         if(wine.getYear() == "0"){
             wine.setYear(win.getYear());
         }
-
-        wineValidation(wine);
-
-        wine.setId(id);
-        wineService.createWine(wine);
-    }
-
-    private void wineValidation(Wine wine) throws Exception{
-        if(wine.getName() == null || wine.getName().trim().isEmpty()){
-            throw new Exception("No name of wine");
-        }
-        if(Integer.parseInt(wine.getYear()) < 1900 || Integer.parseInt(wine.getYear()) > thisYear){
-            throw new Exception("Bad year");
-        }
-        if(wine.getRating() < 0 || wine.getRating() > 5){
-            throw new Exception("Bad rating");
-        }
-        if(Integer.parseInt(wine.getBody()) < 1 || Integer.parseInt(wine.getBody()) > 5){
-            throw new Exception("Bad body");
-        }
-        if(Integer.parseInt(wine.getAcidity()) < 1 || Integer.parseInt(wine.getAcidity()) > 5){
-            throw new Exception("Bad acidity");
-        }
-        if(wine.getNum_reviews() < 0){
-            throw new Exception("Bad number of reviews");
-        }
-        if(wine.getPrice() < 0){
-            throw new Exception("Bad price");
-        }
-        if(! typeRepository.existsById(wine.getType().getId())){
-            throw new Exception("Bad type");
-        }
-        if(! wineryRepository.existsById(wine.getWinery().getId())){
-            throw new Exception("Bad winery");
-        }
-        if(! regionRepository.existsById(wine.getRegion().getId())){
-            throw new Exception("Bad region");
-        }
-    }
     
 }
